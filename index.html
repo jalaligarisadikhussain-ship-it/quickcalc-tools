@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A free, fast, mobile-friendly calculator for everyday arithmetic." />
+  <meta name="theme-color" content="#0b1020" />
+  <title>QuickCalc — Free Online Calculator</title>
+  <style>
+    :root { color-scheme: dark; --bg:#080e1d; --card:#131d33; --button:#202d48; --button-hover:#2d4061; --accent:#7cf0c4; --text:#f7faff; --muted:#9baecb; }
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% -10%,#1d3455 0%,var(--bg) 55%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text)}
+    .wrap{max-width:1100px;margin:auto;padding:24px 16px 36px}header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:36px}.logo{font-weight:800;font-size:24px;letter-spacing:-.7px}.logo span{color:var(--accent)}nav a{color:var(--muted);text-decoration:none;font-size:14px;margin-left:16px}nav a:hover{color:white}
+    h1{text-align:center;margin:0 0 8px;font-size:clamp(27px,5vw,38px);letter-spacing:-1px} .sub{text-align:center;color:var(--muted);margin:0 0 27px;font-size:15px} .main{display:grid;grid-template-columns:minmax(0,420px) minmax(200px,1fr);align-items:start;gap:24px;max-width:790px;margin:0 auto}
+    .calculator{border:1px solid #30415e;background:linear-gradient(160deg,#17253e,#101b30);border-radius:24px;padding:22px;box-shadow:0 24px 60px #0005} .screen{background:#0b1426;border:1px solid #243551;border-radius:16px;padding:17px 18px;text-align:right;min-height:112px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}.expr{color:var(--muted);min-height:20px;overflow-wrap:anywhere;font-size:15px}.result{font-size:clamp(29px,7vw,42px);font-weight:700;letter-spacing:-1px;overflow-wrap:anywhere}
+    .keys{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:17px}.keys button{border:0;border-radius:14px;min-height:67px;background:var(--button);color:white;font-size:22px;font-weight:600;cursor:pointer;touch-action:manipulation;transition:background .15s,transform .1s}.keys button:hover{background:var(--button-hover)}.keys button:active{transform:scale(.96)}.keys .utility{background:#34445d;color:#d9e8fa}.keys .operator{background:#264f51;color:#a9ffda}.keys .equal{background:var(--accent);color:#092323}.keys .equal:hover{background:#b5ffe2}.keys .zero{grid-column:span 2}
+    aside{border:1px dashed #42516b;border-radius:20px;padding:18px;min-height:160px;background:#101a2a} .adtitle{font-size:11px;color:#8b9bb2;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:12px}.adslot{min-height:100px;display:flex;align-items:center;justify-content:center;text-align:center;color:#8193af;font-size:13px;line-height:1.6}.description{max-width:790px;margin:28px auto;color:#aabbd5;font-size:14px;line-height:1.75}.description h2{color:white;font-size:20px;margin-bottom:6px}footer{max-width:790px;margin:35px auto 0;border-top:1px solid #24344e;padding-top:20px;color:#8b9cb7;font-size:12px;text-align:center}footer a{color:#b7e9de;text-decoration:none;margin:0 8px}
+    @media(max-width:650px){header{margin-bottom:26px}.main{grid-template-columns:1fr;max-width:430px}aside{min-height:110px}.adslot{min-height:50px}.wrap{padding:18px 14px 30px}.calculator{padding:15px}.keys button{min-height:63px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header><div class="logo">Quick<span>Calc</span></div><nav><a href="#about">About</a><a href="#privacy">Privacy</a></nav></header>
+    <h1>Simple. Fast. Free.</h1><p class="sub">Everyday math, made easy. Works on desktop and mobile.</p>
+    <main class="main">
+      <section class="calculator" aria-label="Calculator">
+        <div class="screen" aria-live="polite" aria-atomic="true"><div class="expr" id="expression">&nbsp;</div><div class="result" id="display">0</div></div>
+        <div class="keys" id="keys">
+          <button class="utility" data-action="clear" aria-label="Clear all">AC</button><button class="utility" data-action="sign" aria-label="Change sign">±</button><button class="utility" data-action="percent" aria-label="Percent">%</button><button class="operator" data-action="operator" data-value="/" aria-label="Divide">÷</button>
+          <button data-action="digit" data-value="7">7</button><button data-action="digit" data-value="8">8</button><button data-action="digit" data-value="9">9</button><button class="operator" data-action="operator" data-value="*" aria-label="Multiply">×</button>
+          <button data-action="digit" data-value="4">4</button><button data-action="digit" data-value="5">5</button><button data-action="digit" data-value="6">6</button><button class="operator" data-action="operator" data-value="-" aria-label="Subtract">−</button>
+          <button data-action="digit" data-value="1">1</button><button data-action="digit" data-value="2">2</button><button data-action="digit" data-value="3">3</button><button class="operator" data-action="operator" data-value="+" aria-label="Add">+</button>
+          <button class="zero" data-action="digit" data-value="0">0</button><button data-action="decimal">.</button><button class="equal" data-action="equals" aria-label="Calculate result">=</button>
+        </div>
+      </section>
+      <aside aria-label="Advertisement area"><div class="adtitle">Advertisement</div><div class="adslot" id="ad-slot">Ad space reserved.<br>Paste your approved Adsterra ad code here after publisher approval.</div></aside>
+    </main>
+    <section class="description" id="about"><h2>About QuickCalc</h2><p>QuickCalc is a lightweight online calculator for addition, subtraction, multiplication, division and percentages. Use the buttons or your keyboard. All calculations happen directly in your browser; no account is needed.</p></section>
+    <section class="description" id="privacy"><h2>Privacy</h2><p>This calculator does not send your calculations to a server. If advertising is enabled later, the advertising provider may use cookies or similar technology under its own privacy terms. A complete privacy policy and any consent controls required for your audience should be added before going live with ads.</p></section>
+    <footer>© <span id="year"></span> QuickCalc. Free online calculator.</footer>
+  </div>
+  <script>
+    (() => {
+      const display = document.getElementById('display');
+      const expression = document.getElementById('expression');
+      let current = '0', previous = null, operator = null, fresh = false, label = '';
+      const pretty = op => ({'/':'÷','*':'×','-':'−','+':'+'})[op] || op;
+      const format = n => {
+        if (n === 'Error') return n;
+        const value = Number(n);
+        if (!Number.isFinite(value)) return 'Error';
+        if (value === 0) return '0';
+        if (Math.abs(value) >= 1e12 || Math.abs(value) < 1e-8) return value.toExponential(6);
+        return Number(value.toPrecision(11)).toString();
+      };
+      const render = () => {display.textContent = current; expression.textContent = label || '\u00a0';};
+      const reset = () => {current='0';previous=null;operator=null;fresh=false;label='';render();};
+      const calculate = (a, op, b) => {
+        if (op === '+') return a+b;
+        if (op === '-') return a-b;
+        if (op === '*') return a*b;
+        if (op === '/') return b === 0 ? 'Error' : a/b;
+        return b;
+      };
+      function act(action, value) {
+        if (action === 'clear') return reset();
+        if (action === 'digit') {
+          if (current === 'Error' || fresh) { current=value; fresh=false; if (!operator) label=''; }
+          else if (current === '0') current=value;
+          else if (current.replace(/[-.]/g,'').length < 14) current+=value;
+        } else if (action === 'decimal') {
+          if (fresh || current === 'Error') {current='0.';fresh=false;if(!operator)label='';}
+          else if (!current.includes('.')) current+='.';
+        } else if (action === 'sign') {
+          if (current !== 'Error' && Number(current) !== 0) current = current.startsWith('-') ? current.slice(1) : '-'+current;
+        } else if (action === 'percent') {
+          if (current !== 'Error') current=format(Number(current)/100);
+        } else if (action === 'operator') {
+          if (current === 'Error') return;
+          if (operator && !fresh) {
+            const r=calculate(Number(previous),operator,Number(current)); current=format(r);
+            if (current === 'Error') {previous=null;operator=null;label='Cannot divide by zero';return render();}
+          }
+          previous=current;operator=value;fresh=true;label=\`\${previous} \${pretty(operator)}\`;
+        } else if (action === 'equals') {
+          if (operator && previous !== null && current !== 'Error') {
+            const left=previous,op=operator,right=current;
+            current=format(calculate(Number(left),op,Number(right)));
+            label=current==='Error' ? 'Cannot divide by zero' : \`\${left} \${pretty(op)} \${right} =\`;
+            previous=null;operator=null;fresh=true;
+          }
+        } else if (action === 'backspace') {
+          if (fresh || current === 'Error') {current='0';fresh=false;}
+          else current=current.length<=1 || (current.length===2 && current.startsWith('-')) ? '0':current.slice(0,-1);
+        }
+        render();
+      }
+      document.getElementById('keys').addEventListener('click', e => {const b=e.target.closest('button');if(b)act(b.dataset.action,b.dataset.value);});
+      window.addEventListener('keydown', e => {
+        if (/^[0-9]$/.test(e.key)) act('digit',e.key);
+        else if (e.key==='.') act('decimal');
+        else if (['+','-','*','/'].includes(e.key)) {e.preventDefault();act('operator',e.key);}
+        else if (e.key==='Enter'||e.key==='=') {e.preventDefault();act('equals');}
+        else if (e.key==='Escape') act('clear');
+        else if (e.key==='Backspace') act('backspace');
+        else if (e.key==='%') act('percent');
+      });
+      document.getElementById('year').textContent=new Date().getFullYear(); render();
+    })();
+  </script>
+</body>
+</html>
