@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A free, fast, mobile-friendly calculator for everyday arithmetic." />
+  <meta name="description" content="A fast free scientific calculator with trigonometry, logarithms, DEG/RAD, powers, fractions, memory and history." />
   <meta name="theme-color" content="#0b1020" />
-  <title>QuickCalc — Free Online Calculator</title>
+  <title>QuickCalc Scientific — Advanced Online Calculator</title>
   <style>
     :root { color-scheme: dark; --bg:#080e1d; --card:#131d33; --button:#202d48; --button-hover:#2d4061; --accent:#7cf0c4; --text:#f7faff; --muted:#9baecb; }
     *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% -10%,#1d3455 0%,var(--bg) 55%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text)}
@@ -17,26 +17,138 @@
     .ad-banner-300{width:300px;height:250px;max-width:100%;margin:auto;overflow:hidden}.ad-banner-320{width:320px;min-height:50px;margin:auto}.ad-bottom{max-width:790px;margin:26px auto 0;text-align:center;padding:12px 0;overflow:hidden}.adslot{min-height:250px}
     @media(max-width:650px){header{margin-bottom:26px}.main{grid-template-columns:1fr;max-width:430px}aside{min-height:110px}.adslot{min-height:50px}.wrap{padding:18px 14px 30px}.calculator{padding:15px}.keys button{min-height:63px}}
   .screen input.result{display:block;width:100%;min-width:0;padding:5px 0 0;background:transparent;border:0;outline:0;color:var(--text);text-align:right;font-family:inherit;font-weight:700;font-size:clamp(28px,7vw,42px);caret-color:var(--accent)}.screen input.result:focus{box-shadow:inset 0 -2px var(--accent)}.calc-help{font-size:12px;text-align:center;color:var(--muted);margin:15px 0 10px}.history{margin-top:12px;border-top:1px solid #2c405d;padding-top:12px;color:#b8cbe2;font-size:13px}.history ol{list-style:none;padding:0;margin:6px 0 0}.history li button{display:block;width:100%;padding:7px 3px;color:#c9dff2;border:0;background:none;font-size:13px;text-align:left;cursor:pointer;overflow-wrap:anywhere}.history li button:hover{color:var(--accent)}
+
+/* Scientific calculator v3 */
+.main{grid-template-columns:minmax(0,680px) minmax(220px,1fr);max-width:1060px;align-items:start;gap:22px}
+.calculator{padding:20px;background:linear-gradient(155deg,#182741,#0d192e);width:100%;min-width:0}
+.calc-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.calc-brand{display:flex;align-items:center;gap:10px;font-size:15px}.calc-brand small{display:block;color:var(--muted);font-size:11px;font-weight:400;margin-top:3px}
+.calc-brand-icon{display:grid;place-items:center;border-radius:12px;background:#173f4b;color:var(--accent);width:39px;height:39px;font-size:22px}
+.mode-control{display:flex;align-items:center;border:1px solid #425878;background:#0b1527;border-radius:11px;padding:3px}
+.mode-btn{border:0;color:#a9bed6;border-radius:8px;background:transparent;font-weight:700;cursor:pointer;padding:8px 12px}
+.mode-btn.active{background:#265267;color:#caffed}
+.calc-display{background:linear-gradient(160deg,#091626,#101f33);border:1px solid #364a67;border-radius:17px;padding:13px 16px;min-width:0}
+.display-meta,.display-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:11px;color:#99aecb}
+.display-meta span{padding:4px 7px;background:#23334c;border-radius:6px}
+.expression{min-height:28px;color:#92e5c6;font-size:13px;text-align:right;overflow-wrap:anywhere;padding-top:7px}
+.calc-display input.result{display:block;width:100%;min-width:0;border:0;outline:0;background:transparent;color:#fff;text-align:right;font-family:inherit;font-size:clamp(27px,5vw,40px);font-weight:750;padding:8px 0;caret-color:#7cf0c4}
+.calc-display input.result:focus{box-shadow:inset 0 -2px var(--accent)}
+.text-control{padding:3px 0;background:transparent;border:0;color:#86e8d0;font-size:11px;font-weight:600;cursor:pointer}
+.keypads{margin-top:15px}.scientific-keys{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin-bottom:13px}
+.keypads button{touch-action:manipulation;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.scientific-keys button{height:46px;border:1px solid #364762;border-radius:10px;background:#20324e;color:#e6f3ff;font-size:14px;font-weight:650;padding:0 2px}
+.scientific-keys .shift{background:#1e4959;color:#aaf8da}
+.scientific-keys .shift.active{background:#7cf0c4;color:#102e34}
+.scientific-keys .constant{color:#a7f5d7}
+.scientific-keys .memory{color:#b9d2ff}
+.scientific-keys button:active,.number-keys button:active{transform:scale(.95)}
+.number-keys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.number-keys button{height:60px;background:#25344d;color:#f7fbff;border:0;border-radius:13px;font-size:21px;font-weight:650}
+.number-keys button.utility{background:#36465d;color:#d5e6f9}
+.number-keys button.operator{background:#22585a;color:#b9ffe6}
+.number-keys button.equal{background:#7cf0c4;color:#0b2a25;font-size:27px}
+.calc-help{margin:15px 0 5px;color:#99aecb;font-size:12px;line-height:1.6;text-align:center}
+.calc-help code{color:#b3f5df}
+.history{margin-top:15px;border-top:1px solid #32415c;padding-top:13px}
+.history-head{display:flex;justify-content:space-between;align-items:center;color:#bccde1;font-size:13px}
+.history ol{list-style:none;padding:0;margin:8px 0 0}
+.history li button{display:block;width:100%;text-align:left;background:none;border:0;color:#c7dced;padding:9px 4px;border-bottom:1px solid #2a3a53;font-size:13px;cursor:pointer;overflow-wrap:anywhere}
+.history li button:hover{color:var(--accent)}
+.calculator.basic-mode .scientific-keys{display:none}
+.calculator.basic-mode{max-width:490px;margin:0 auto}
+.calculator.basic-mode .number-keys button{height:67px}
+@media(max-width:750px){.main{grid-template-columns:1fr;max-width:680px}.calculator{padding:14px}aside{max-width:350px;width:100%;margin:0 auto}.calc-topbar{gap:9px}}
+@media(max-width:420px){.scientific-keys{gap:5px}.scientific-keys button{height:42px;font-size:12px}.number-keys{gap:7px}.number-keys button{height:55px}.calc-brand{font-size:13px}.mode-btn{font-size:11px;padding:7px 8px}.calc-display input.result{font-size:30px}.calc-display{padding:11px}}
+
 </style>
 </head>
 <body>
   <div class="wrap">
     <header><div class="logo">Quick<span>Calc</span></div><nav><a href="#about">About</a><a href="#privacy">Privacy</a></nav></header>
-    <h1>Simple. Fast. Free.</h1><p class="sub">Everyday math, made easy. Works on desktop and mobile.</p>
+    <h1>Scientific Calculator, Made Simple.</h1><p class="sub">Explore calculations with powerful functions — designed for mobile and desktop.</p>
     <main class="main">
-      <section class="calculator" aria-label="Calculator">
-        <div class="screen"><div class="expr" id="expression">Tap display to type • Enter or = to calculate</div><input class="result" id="display" type="text" inputmode="decimal" aria-label="Type a calculation" value="0" autocomplete="off" spellcheck="false" /></div>
-        <div class="keys" id="keys">
-          <button class="utility" data-action="clear" aria-label="Clear">AC</button><button class="utility" data-action="backspace" aria-label="Backspace">⌫</button><button class="utility" data-action="percent" aria-label="Percent">%</button><button class="operator" data-action="operator" data-value="/" aria-label="Divide">÷</button>
-          <button data-action="digit" data-value="7">7</button><button data-action="digit" data-value="8">8</button><button data-action="digit" data-value="9">9</button><button class="operator" data-action="operator" data-value="*" aria-label="Multiply">×</button>
-          <button data-action="digit" data-value="4">4</button><button data-action="digit" data-value="5">5</button><button data-action="digit" data-value="6">6</button><button class="operator" data-action="operator" data-value="-" aria-label="Minus">−</button>
-          <button data-action="digit" data-value="1">1</button><button data-action="digit" data-value="2">2</button><button data-action="digit" data-value="3">3</button><button class="operator" data-action="operator" data-value="+" aria-label="Plus">+</button>
-          <button class="utility" data-action="sign" aria-label="Change sign">±</button><button data-action="digit" data-value="0">0</button><button data-action="decimal" data-value=".">.</button><button class="equal" data-action="equals" aria-label="Equals">=</button>
-          <button class="utility" data-action="parenthesis" data-value="(">(</button><button class="utility" data-action="parenthesis" data-value=")">)</button><button class="utility" data-action="square" aria-label="Square">x²</button><button class="utility" data-action="sqrt" aria-label="Square root">√</button>
-        </div>
-        <p class="calc-help">Tap the display and type 125+35, then press =</p>
-        <div class="history"><strong>Recent calculations</strong><ol id="history-list"></ol></div>
-      </section>
+      <section class="calculator" aria-label="QuickCalc scientific calculator" id="calculator-panel">
+  <div class="calc-topbar">
+    <div class="calc-brand"><span class="calc-brand-icon">∑</span><div><strong>QuickCalc Scientific</strong><small>Precision tools, simplified</small></div></div>
+    <div class="mode-control" role="group" aria-label="Calculator mode">
+      <button class="mode-btn" data-action="mode" data-value="basic" id="basic-mode">Basic</button>
+      <button class="mode-btn active" data-action="mode" data-value="scientific" id="scientific-mode">Scientific</button>
+    </div>
+  </div>
+  <div class="calc-display">
+    <div class="display-meta"><span id="angle-status">DEG</span><span id="memory-status">M: 0</span></div>
+    <div class="expression" id="expression" role="status" aria-live="polite">Type a calculation or tap the keys</div>
+    <input class="result" id="display" type="text" inputmode="decimal" aria-label="Enter mathematical expression" value="0" autocomplete="off" autocapitalize="off" spellcheck="false" />
+    <div class="display-foot"><span>Type expressions directly</span><button type="button" class="text-control" data-action="copy" id="copy-button">Copy result</button></div>
+  </div>
+  <div class="keypads" id="keys">
+    <div class="scientific-keys" aria-label="Scientific functions">
+      <button class="fn shift" data-action="inverse" id="inverse-button" aria-pressed="false">2nd</button>
+      <button class="fn shift" data-action="angle" id="angle-button">DEG</button>
+      <button class="fn" data-insert="!" aria-label="Factorial">x!</button>
+      <button class="fn" data-insert="(" aria-label="Open parenthesis">(</button>
+      <button class="fn" data-insert=")" aria-label="Close parenthesis">)</button>
+
+      <button class="fn trig" data-action="trig" data-value="sin" id="sin-button">sin</button>
+      <button class="fn trig" data-action="trig" data-value="cos" id="cos-button">cos</button>
+      <button class="fn trig" data-action="trig" data-value="tan" id="tan-button">tan</button>
+      <button class="fn" data-insert="log(" aria-label="Base ten logarithm">log</button>
+      <button class="fn" data-insert="ln(" aria-label="Natural logarithm">ln</button>
+
+      <button class="fn" data-action="wrap" data-value="square" aria-label="Square current value">x²</button>
+      <button class="fn" data-action="wrap" data-value="cube" aria-label="Cube current value">x³</button>
+      <button class="fn" data-insert="^" aria-label="Power">xʸ</button>
+      <button class="fn" data-insert="sqrt(" aria-label="Square root">√</button>
+      <button class="fn" data-insert="cbrt(" aria-label="Cube root">∛</button>
+
+      <button class="fn" data-insert="10^(" aria-label="Ten to the power of">10ˣ</button>
+      <button class="fn" data-insert="exp(" aria-label="Exponential e to the power">eˣ</button>
+      <button class="fn" data-action="wrap" data-value="reciprocal" aria-label="Reciprocal">1/x</button>
+      <button class="fn" data-insert="abs(" aria-label="Absolute value">|x|</button>
+      <button class="fn constant" data-insert="π" aria-label="Pi">π</button>
+
+      <button class="fn constant" data-insert="e" aria-label="Euler's number">e</button>
+      <button class="fn" data-insert="nCr" aria-label="Combinations">nCr</button>
+      <button class="fn" data-insert="nPr" aria-label="Permutations">nPr</button>
+      <button class="fn" data-insert="mod" aria-label="Modulo">mod</button>
+      <button class="fn constant" data-insert="Ans" aria-label="Previous answer">Ans</button>
+
+      <button class="fn memory" data-action="memory-add">M+</button>
+      <button class="fn memory" data-action="memory-minus">M−</button>
+      <button class="fn memory" data-action="memory-recall">MR</button>
+      <button class="fn memory" data-action="memory-clear">MC</button>
+      <button class="fn" data-action="fraction" aria-label="Toggle decimal and fraction">S⇔D</button>
+
+      <button class="fn" data-insert="sinh(" aria-label="Hyperbolic sine">sinh</button>
+      <button class="fn" data-insert="cosh(" aria-label="Hyperbolic cosine">cosh</button>
+      <button class="fn" data-insert="tanh(" aria-label="Hyperbolic tangent">tanh</button>
+      <button class="fn" data-insert="log2(" aria-label="Base two logarithm">log₂</button>
+      <button class="fn" data-action="random" aria-label="Random number">Ran#</button>
+    </div>
+    <div class="number-keys" aria-label="Arithmetic keypad">
+      <button class="utility" data-action="clear" aria-label="Clear all">AC</button>
+      <button class="utility" data-action="backspace" aria-label="Delete last character">⌫</button>
+      <button class="utility" data-insert="%" aria-label="Percentage">%</button>
+      <button class="operator" data-insert="÷" aria-label="Divide">÷</button>
+
+      <button data-insert="7">7</button><button data-insert="8">8</button><button data-insert="9">9</button>
+      <button class="operator" data-insert="×" aria-label="Multiply">×</button>
+
+      <button data-insert="4">4</button><button data-insert="5">5</button><button data-insert="6">6</button>
+      <button class="operator" data-insert="−" aria-label="Subtract">−</button>
+
+      <button data-insert="1">1</button><button data-insert="2">2</button><button data-insert="3">3</button>
+      <button class="operator" data-insert="+" aria-label="Add">+</button>
+
+      <button class="utility" data-action="sign" aria-label="Change sign">±</button>
+      <button data-insert="0">0</button>
+      <button data-insert=".">.</button>
+      <button class="equal" data-action="equals" aria-label="Calculate result">=</button>
+    </div>
+  </div>
+  <p class="calc-help">Example: <code>sin(30)+2^3</code> → 8.5 in DEG mode. Use Enter or = to calculate.</p>
+  <div class="history"><div class="history-head"><strong>Recent calculations</strong><button type="button" class="text-control" data-action="clear-history">Clear history</button></div><ol id="history-list"></ol></div>
+</section>
       <aside aria-label="Advertisement area"><div class="adtitle">Advertisement</div><div class="adslot" id="ad-slot">
         <!-- Adsterra approved 300x250 banner, QuickCalc -->
         <div class="ad-banner-300">
@@ -53,7 +165,7 @@
         </div>
       </div></aside>
     </main>
-    <section class="description" id="about"><h2>About QuickCalc</h2><p>QuickCalc is a lightweight online calculator for addition, subtraction, multiplication, division and percentages. Use the buttons or your keyboard. All calculations happen directly in your browser; no account is needed.</p></section>
+    <section class="description" id="about"><h2>About QuickCalc</h2><p>QuickCalc offers an accessible basic and scientific calculator. You can enter expressions such as sin(30), sqrt(81), 6nCr2, 2^8, log(100), 3! and (2+3)*4. Switch between degrees and radians, recall your last answer, save a value in memory and convert simple decimals into fractions. All computations run locally in your browser; no account is required.</p></section>
     <section class="description" id="privacy"><h2>Privacy</h2><p>This calculator does not send your calculations to a server. If advertising is enabled later, the advertising provider may use cookies or similar technology under its own privacy terms. A complete privacy policy and any consent controls required for your audience should be added before going live with ads.</p></section>
     <div class="ad-bottom" aria-label="Advertisement">
       <div class="adtitle">Advertisement</div>
@@ -78,118 +190,270 @@
   "use strict";
   const input=document.getElementById("display");
   const hint=document.getElementById("expression");
-  const history=document.getElementById("history-list");
-  let justCalculated=false;
-  const recent=[];
-  const status=t=>{hint.textContent=t||"Tap display to type • Enter or = to calculate";};
-  function fmt(n) {
-    if(!Number.isFinite(n)) throw Error("Result is too large");
-    return n===0 ? "0" : String(Number(n.toPrecision(12)));
+  const list=document.getElementById("history-list");
+  const panel=document.getElementById("calculator-panel");
+  const keys=document.getElementById("keys");
+  const memoryLabel=document.getElementById("memory-status");
+  const angleLabel=document.getElementById("angle-status");
+  const angleButton=document.getElementById("angle-button");
+  const inverseButton=document.getElementById("inverse-button");
+  let memory=0,ans=0,angle="DEG",inverse=false,calculated=false,mode="scientific";
+  let previousDecimal=null;
+  const history=[];
+  const setStatus=(msg)=>{hint.textContent=msg||"Type a calculation or tap the keys";};
+  const format=(n)=>{
+    if(!Number.isFinite(n))throw Error("Result exceeds calculator range");
+    if(Math.abs(n)<1e-12)return "0";
+    return String(Number(n.toPrecision(12)));
+  };
+  const rad=x=>angle==="DEG"?x*Math.PI/180:x;
+  const unrad=x=>angle==="DEG"?x*180/Math.PI:x;
+  function factorial(x){
+    if(!Number.isInteger(x)||x<0||x>170)throw Error("Factorial requires an integer from 0 to 170");
+    let r=1;for(let i=2;i<=x;i++)r*=i;return r;
   }
-  function evaluate(raw) {
-    const s=raw.replace(/\s/g,"").replace(/×|x|X/g,"*").replace(/÷/g,"/").replace(/−/g,"-").replace(/,/g,"");
-    if(!s||s.length>120) throw Error("Enter a valid calculation");
-    let i=0;
+  function choose(n,r,permutation){
+    if(!Number.isInteger(n)||!Number.isInteger(r)||n<0||r<0||r>n||n>170)throw Error("nCr/nPr: use 0 ≤ r ≤ n ≤ 170");
+    if(permutation){let v=1;for(let i=0;i<r;i++)v*=n-i;return v;}
+    r=Math.min(r,n-r);
+    let v=1;for(let i=1;i<=r;i++)v=v*(n-r+i)/i;
+    return Math.round(v);
+  }
+  function fn(name,args){
+    const x=args[0];
+    if(args.length!==1)throw Error(name+" expects one argument");
+    switch(name){
+      case "sin":return Math.sin(rad(x));
+      case "cos":return Math.cos(rad(x));
+      case "tan":if(Math.abs(Math.cos(rad(x)))<1e-12)throw Error("tan undefined at this angle");return Math.tan(rad(x));
+      case "asin":if(Math.abs(x)>1)throw Error("sin⁻¹ requires values from -1 to 1");return unrad(Math.asin(x));
+      case "acos":if(Math.abs(x)>1)throw Error("cos⁻¹ requires values from -1 to 1");return unrad(Math.acos(x));
+      case "atan":return unrad(Math.atan(x));
+      case "sinh":return Math.sinh(x);
+      case "cosh":return Math.cosh(x);
+      case "tanh":return Math.tanh(x);
+      case "log":if(x<=0)throw Error("Log input must be positive");return Math.log10(x);
+      case "ln":if(x<=0)throw Error("Ln input must be positive");return Math.log(x);
+      case "log2":if(x<=0)throw Error("Log₂ input must be positive");return Math.log2(x);
+      case "sqrt":if(x<0)throw Error("Square root requires nonnegative input");return Math.sqrt(x);
+      case "cbrt":return Math.cbrt(x);
+      case "abs":return Math.abs(x);
+      case "exp":return Math.exp(x);
+      default:throw Error("Unknown function: "+name);
+    }
+  }
+  // Recursive-descent parser: never executes typed text as JavaScript.
+  function evaluate(raw){
+    const text=raw.replace(/×/g,"*").replace(/÷/g,"/").replace(/−/g,"-").replace(/π/g,"pi").replace(/,/g,",").replace(/\s+/g,"");
+    if(!text||text.length>220)throw Error("Enter a shorter expression");
+    const ts=[];let at=0;
+    while(at<text.length){
+      const tail=text.slice(at);
+      const numeric=/^(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?/.exec(tail);
+      if(numeric){ts.push({type:"num",value:Number(numeric[0])});at+=numeric[0].length;continue;}
+      const word=/^[a-zA-Z][a-zA-Z0-9]*/.exec(tail);
+      if(word){ts.push({type:"name",value:word[0]});at+=word[0].length;continue;}
+      if("+-*/^%!(),".includes(text[at])){ts.push({type:"sym",value:text[at]});at++;continue;}
+      throw Error("Unsupported character");
+    }
+    let i=0;const peek=()=>ts[i]?.value;const consume=(token)=>{if(peek()===token){i++;return true;}return false;};
     function atom(){
-      if(s[i]==="("){i++;const v=sum();if(s[i]!==")")throw Error("Close the parentheses");i++;return v;}
-      const m=/^(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?/.exec(s.slice(i));
-      if(!m)throw Error("Check your expression");
-      i+=m[0].length;return Number(m[0]);
+      if(consume("(")){const v=addition();if(!consume(")"))throw Error("Missing closing parenthesis");return v;}
+      const t=ts[i];
+      if(!t)throw Error("Incomplete expression");
+      if(t.type==="num"){i++;return t.value;}
+      if(t.type==="name"){
+        i++;
+        const name=t.value,low=name.toLowerCase();
+        if(low==="pi")return Math.PI;
+        if(name==="Ans"||low==="ans")return ans;
+        if(name==="M"||low==="mem")return memory;
+        if(low==="e")return Math.E;
+        if(!consume("("))throw Error("Use "+name+"(...)");
+        const args=[addition()];
+        while(consume(","))args.push(addition());
+        if(!consume(")"))throw Error("Missing ) after "+name);
+        return fn(low,args);
+      }
+      throw Error("Check number or parentheses");
+    }
+    function postfix(){
+      let v=atom();
+      while(peek()==="!"||peek()==="%"){
+        const op=peek();i++;
+        v=op==="!"?factorial(v):v/100;
+      }
+      return v;
+    }
+    function power(){
+      let value=postfix();
+      if(consume("^"))value=Math.pow(value,unary());
+      return value;
     }
     function unary(){
-      if(s[i]==="+"){i++;return unary();}
-      if(s[i]==="-"){i++;return -unary();}
-      let v=atom();while(s[i]==="%"){i++;v/=100;}return v;
+      if(consume("+"))return unary();
+      if(consume("-"))return -unary();
+      return power();
     }
-    function product(){
-      let v=unary();
-      while(s[i]==="*"||s[i]==="/"){
-        const op=s[i++],other=unary();
-        if(op==="/"&&other===0)throw Error("Cannot divide by zero");
-        v=op==="*"?v*other:v/other;
+    function multiplication(){
+      let value=unary();
+      while(true){
+        const op=peek();
+        if(op==="*"||op==="/"||(ts[i]?.type==="name"&&op==="mod")){
+          i++;const right=unary();
+          if((op==="/"||op==="mod")&&right===0)throw Error("Cannot divide by zero");
+          value=op==="*"?value*right:op==="/"?value/right:value%right;
+          continue;
+        }
+        if(op==="nCr"||op==="nPr"){
+          i++;value=choose(value,unary(),op==="nPr");continue;
+        }
+        // 2pi, 2(3+4), 2sin(30)
+        if(op==="("||ts[i]?.type==="name"&&op!=="mod"){
+          value*=unary();continue;
+        }
+        break;
       }
-      return v;
+      return value;
     }
-    function sum(){
-      let v=product();
-      while(s[i]==="+"||s[i]==="-"){
-        const op=s[i++],other=product();
-        v=op==="+"?v+other:v-other;
+    function addition(){
+      let value=multiplication();
+      while(peek()==="+"||peek()==="-"){
+        const op=peek();i++;const right=multiplication();
+        value=op==="+"?value+right:value-right;
       }
-      return v;
+      return value;
     }
-    const answer=sum();
-    if(i!==s.length)throw Error("Check your expression");
-    return answer;
+    const value=addition();
+    if(i!==ts.length)throw Error("Check the expression");
+    if(!Number.isFinite(value))throw Error("Result exceeds calculator range");
+    return value;
   }
-  function setVal(t){input.value=t;status("");}
-  function append(t){
-    let val=input.value;
-    if(justCalculated&&/^[0-9.(]$/.test(t))val="";
-    if(val==="0"&&/^[0-9]$/.test(t))val="";
-    if(val==="0"&&t===".")val="0";
-    if((val+t).length>120)return;
-    justCalculated=false;
-    setVal(val+t);
+  function put(value){
+    input.value=value;previousDecimal=null;setStatus("");
   }
-  function renderHistory(){
-    history.replaceChildren();
-    recent.forEach(item=>{
-      const li=document.createElement("li"),b=document.createElement("button");
-      b.type="button";b.textContent=item.expression+" = "+item.result;
-      b.addEventListener("click",()=>{setVal(item.result);justCalculated=true;});
-      li.appendChild(b);history.appendChild(li);
+  function insert(piece){
+    let value=input.value;
+    if(value==="0"&&(/^[0-9]$/.test(piece)||piece==="."||piece==="("||piece==="π"||piece==="e"||piece==="Ans"))value=piece==="."?"0":""; 
+    if(calculated&&(/^[0-9]$/.test(piece)||piece==="."||piece==="("||piece==="π"||piece==="e"||piece==="Ans"||piece.endsWith("(")))value="";
+    if(value.length+piece.length>220){setStatus("Expression is too long");return;}
+    put(value+piece);calculated=false;
+  }
+  function doEquals(){
+    const expr=input.value.trim();
+    try{
+      const value=evaluate(expr),out=format(value);
+      ans=value;put(out);calculated=true;setStatus(expr+" =");
+      history.unshift({expr,result:out});
+      if(history.length>6)history.pop();
+      drawHistory();
+    }catch(e){setStatus(e.message);input.focus();}
+  }
+  function drawHistory(){
+    list.replaceChildren();
+    history.forEach(item=>{
+      const li=document.createElement("li");
+      const b=document.createElement("button");
+      b.type="button";
+      b.textContent=item.expr+" = "+item.result;
+      b.addEventListener("click",()=>{put(item.result);calculated=true;});
+      li.appendChild(b);list.appendChild(li);
     });
   }
-  function equals(){
-    const expression=input.value.trim();
-    try{
-      const result=fmt(evaluate(expression));
-      setVal(result);status(expression+" =");
-      recent.unshift({expression,result});if(recent.length>5)recent.pop();
-      renderHistory();justCalculated=true;
-    }catch(e){status(e.message);input.focus();}
-  }
-  function act(name,value){
-    if(name==="clear"){setVal("0");justCalculated=false;}
-    else if(["digit","operator","decimal","parenthesis"].includes(name))append(value);
-    else if(name==="percent")append("%");
-    else if(name==="backspace"){setVal(input.value.slice(0,-1)||"0");justCalculated=false;}
-    else if(name==="sign"){setVal("-("+input.value+")");justCalculated=false;}
-    else if(name==="equals")equals();
-    else if(name==="square"||name==="sqrt"){
-      try{
-        const before=input.value,n=evaluate(before);
-        if(name==="sqrt"&&n<0)throw Error("Cannot square root a negative number");
-        setVal(fmt(name==="square"?n*n:Math.sqrt(n)));
-        status((name==="square"?"("+before+")²":"√("+before+")")+" =");
-        justCalculated=true;
-      }catch(e){status(e.message);}
+  function getCurrent(){return evaluate(input.value);}
+  function fraction(value){
+    const sign=value<0?"-":"",x=Math.abs(value);
+    if(!Number.isFinite(x))throw Error("Cannot convert to fraction");
+    const whole=Math.round(x);
+    if(Math.abs(x-whole)<1e-10)return sign+String(whole);
+    let bestNum=0,bestDen=1,bestErr=Infinity;
+    for(let d=1;d<=2000;d++){
+      const n=Math.round(x*d),err=Math.abs(x-n/d);
+      if(err<bestErr){bestErr=err;bestNum=n;bestDen=d;}
+      if(err<1e-10)break;
     }
+    if(bestErr>1e-8)throw Error("No simple fraction found");
+    return sign+bestNum+"/"+bestDen;
   }
-  document.getElementById("keys").addEventListener("click",e=>{
-    const b=e.target.closest("button[data-action]");
-    if(b)act(b.dataset.action,b.dataset.value||"");
+  function updateTrig(){
+    ["sin","cos","tan"].forEach(name=>{
+      const b=document.getElementById(name+"-button");
+      b.textContent=inverse?name+"⁻¹":name;
+      b.setAttribute("aria-label",inverse?"Inverse "+name:name);
+    });
+    inverseButton.classList.toggle("active",inverse);
+    inverseButton.setAttribute("aria-pressed",String(inverse));
+    angleButton.textContent=angle;
+    angleLabel.textContent=angle;
+  }
+  function dispatch(action,value){
+    try{
+      switch(action){
+        case "mode":
+          mode=value;
+          panel.classList.toggle("basic-mode",mode==="basic");
+          document.getElementById("basic-mode").classList.toggle("active",mode==="basic");
+          document.getElementById("scientific-mode").classList.toggle("active",mode==="scientific");
+          break;
+        case "clear":put("0");calculated=false;break;
+        case "backspace":put(input.value.slice(0,-1)||"0");calculated=false;break;
+        case "equals":doEquals();break;
+        case "sign":put("-("+input.value+")");calculated=false;break;
+        case "inverse":inverse=!inverse;updateTrig();break;
+        case "angle":angle=angle==="DEG"?"RAD":"DEG";updateTrig();setStatus("Angle mode: "+angle);break;
+        case "trig":insert((inverse?"a":"")+value+"(");break;
+        case "wrap":
+          if(value==="square")put("("+input.value+")^2");
+          if(value==="cube")put("("+input.value+")^3");
+          if(value==="reciprocal")put("1/("+input.value+")");
+          calculated=false;break;
+        case "memory-add":memory+=getCurrent();memoryLabel.textContent="M: "+format(memory);setStatus("Added to memory");break;
+        case "memory-minus":memory-=getCurrent();memoryLabel.textContent="M: "+format(memory);setStatus("Subtracted from memory");break;
+        case "memory-recall":insert("("+format(memory)+")");break;
+        case "memory-clear":memory=0;memoryLabel.textContent="M: 0";setStatus("Memory cleared");break;
+        case "fraction":
+          if(previousDecimal!==null){put(previousDecimal);previousDecimal=null;}
+          else {const v=getCurrent();const decimal=format(v);const f=fraction(v);if(f!==decimal){put(f);previousDecimal=decimal;}else setStatus("Already a whole number");}
+          calculated=true;break;
+        case "random":put(format(Math.random()));calculated=true;break;
+        case "copy":
+          if(navigator.clipboard?.writeText){
+            navigator.clipboard.writeText(input.value).then(()=>setStatus("Copied result")).catch(()=>setStatus("Select display text to copy"));
+          }else{input.select();setStatus("Select and copy the result");}
+          break;
+        case "clear-history":history.length=0;drawHistory();setStatus("History cleared");break;
+      }
+    }catch(e){setStatus(e.message);}
+  }
+  keys.addEventListener("click",ev=>{
+    const btn=ev.target.closest("button");
+    if(!btn)return;
+    if(btn.dataset.insert!==undefined)insert(btn.dataset.insert);
+    else if(btn.dataset.action)dispatch(btn.dataset.action,btn.dataset.value||"");
+  });
+  panel.addEventListener("click",ev=>{
+    const btn=ev.target.closest("button[data-action]");
+    if(btn&&!keys.contains(btn))dispatch(btn.dataset.action,btn.dataset.value||"");
   });
   input.addEventListener("input",()=>{
-    const val=input.value,filtered=val.replace(/[^0-9+\-*/().%×÷−xXeE,\s]/g,"").slice(0,120);
-    if(val!==filtered)input.value=filtered;
-    justCalculated=false;status("");
+    const raw=input.value;
+    const filtered=raw.replace(/[^0-9+\-*/^!%().,×÷−πa-zA-Z\s]/g,"").slice(0,220);
+    if(raw!==filtered)input.value=filtered;
+    calculated=false;previousDecimal=null;setStatus("");
   });
-  input.addEventListener("keydown",e=>{
-    if(e.key==="Enter"||e.key==="="){e.preventDefault();equals();}
-    else if(e.key==="Escape"){e.preventDefault();act("clear");}
+  input.addEventListener("keydown",ev=>{
+    if(ev.key==="Enter"||ev.key==="="){ev.preventDefault();doEquals();}
+    else if(ev.key==="Escape"){ev.preventDefault();dispatch("clear");}
   });
-  document.addEventListener("keydown",e=>{
-    if(document.activeElement===input||e.ctrlKey||e.altKey||e.metaKey)return;
-    if(/^[0-9]$/.test(e.key))append(e.key);
-    else if(["+","-","*","/","(",")",".","%"].includes(e.key))append(e.key);
-    else if(e.key==="Enter"||e.key==="="){e.preventDefault();equals();}
-    else if(e.key==="Escape")act("clear");
-    else if(e.key==="Backspace")act("backspace");
+  document.addEventListener("keydown",ev=>{
+    if(document.activeElement===input||ev.ctrlKey||ev.altKey||ev.metaKey)return;
+    if(/^[0-9]$/.test(ev.key)||"+-*/^!%().".includes(ev.key)&&ev.key.length===1)insert(ev.key);
+    else if(ev.key==="Enter"||ev.key==="="){ev.preventDefault();doEquals();}
+    else if(ev.key==="Backspace")dispatch("backspace");
+    else if(ev.key==="Escape")dispatch("clear");
   });
   document.getElementById("year").textContent=new Date().getFullYear();
-  status("");
+  updateTrig();setStatus("");
 })();
 </script>
 </body>
