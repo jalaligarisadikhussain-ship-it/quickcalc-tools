@@ -60,7 +60,15 @@
 @media(max-width:750px){.main{grid-template-columns:1fr;max-width:680px}.calculator{padding:14px}aside{max-width:350px;width:100%;margin:0 auto}.calc-topbar{gap:9px}}
 @media(max-width:420px){.scientific-keys{gap:5px}.scientific-keys button{height:42px;font-size:12px}.number-keys{gap:7px}.number-keys button{height:55px}.calc-brand{font-size:13px}.mode-btn{font-size:11px;padding:7px 8px}.calc-display input.result{font-size:30px}.calc-display{padding:11px}}
 
-</style>
+
+    /* Keep publisher ads visible on every calculator mode. Single load per page. */
+    .qc-persistent-ad{display:block;max-width:360px;width:100%;margin:24px auto 12px;min-height:295px;padding:15px;text-align:center}
+    .qc-persistent-ad .adslot{display:flex;min-height:250px;align-items:center;justify-content:center}
+    .ad-banner-300{min-width:300px;min-height:250px;position:relative}
+    .ad-bottom{display:block;min-height:88px}
+    .ad-banner-320{max-width:100%;min-height:50px}
+    @media(max-width:350px){.qc-persistent-ad{padding:8px}.qc-persistent-ad .ad-banner-300{max-width:300px}}
+  </style>
   <link rel="stylesheet" href="./advanced.css" />
 </head>
 <body>
@@ -151,8 +159,19 @@
   <p class="calc-help">Example: <code>sin(30)+2^3</code> → 8.5 in DEG mode. Use Enter or = to calculate.</p>
   <div class="history"><div class="history-head"><strong>Recent calculations</strong><button type="button" class="text-control" data-action="clear-history">Clear history</button></div><ol id="history-list"></ol></div>
 </section>
-      <aside aria-label="Advertisement area"><div class="adtitle">Advertisement</div><div class="adslot" id="ad-slot">
-        <!-- Adsterra approved 300x250 banner, QuickCalc -->
+      
+    </main>
+    <section id="advanced-workbench" class="advanced-workbench" aria-label="Advanced calculator tools" hidden>
+      <div class="adv-heading">
+        <div class="adv-eyebrow">QuickCalc · Advanced tools</div>
+        <h2 id="adv-title">Advanced calculator</h2>
+        <p id="adv-subtitle">Choose a mode to start calculating</p>
+      </div>
+      <div id="adv-view"></div>
+      <section id="adv-result" class="adv-result" aria-live="polite" hidden></section>
+    </section>
+    <aside class="qc-persistent-ad" aria-label="Advertisement area"><div class="adtitle">Advertisement</div><div class="adslot" id="ad-slot">
+        <!-- Configured 300x250 advertising tag: verify approval and ad serving in the publisher dashboard -->
         <div class="ad-banner-300">
           <script>
             atOptions = {
@@ -166,21 +185,11 @@
           <script src="https://bauval.org/22/1c425a5d39a4a3337f7c8e89b2715b11"></script>
         </div>
       </div></aside>
-    </main>
-    <section id="advanced-workbench" class="advanced-workbench" aria-label="Advanced calculator tools" hidden>
-      <div class="adv-heading">
-        <div class="adv-eyebrow">QuickCalc · Advanced tools</div>
-        <h2 id="adv-title">Advanced calculator</h2>
-        <p id="adv-subtitle">Choose a mode to start calculating</p>
-      </div>
-      <div id="adv-view"></div>
-      <section id="adv-result" class="adv-result" aria-live="polite" hidden></section>
-    </section>
     <section class="description" id="about"><h2>About QuickCalc</h2><p>QuickCalc combines a basic and scientific calculator with 12 advanced modes: equations, matrices, vectors, statistics, probability distributions, complex numbers, function tables, numerical calculus, base conversions, unit conversions, number tools and a small spreadsheet. Use the scrollable mode selector to switch between tools. Calculations run locally in your browser; no account is required. Numerical solvers provide approximate results and are not a replacement for specialist engineering software.</p></section>
-    <section class="description" id="privacy"><h2>Privacy</h2><p>This calculator does not send your calculations to a server. If advertising is enabled later, the advertising provider may use cookies or similar technology under its own privacy terms. A complete privacy policy and any consent controls required for your audience should be added before going live with ads.</p></section>
+    <section class="description" id="privacy"><h2>Privacy</h2><p>This calculator does not send your calculations to a server. This page includes third-party advertising code that may request ads, set cookies, or process visitor information according to the provider’s policies. Ads may be blocked by browser settings or unavailable in some regions. Relevant disclosures, privacy policy information, and consent controls should be reviewed before accepting production ad traffic.</p></section>
     <div class="ad-bottom" aria-label="Advertisement">
       <div class="adtitle">Advertisement</div>
-      <!-- Adsterra approved 320x50 banner, QuickCalc -->
+      <!-- Configured 320x50 advertising tag: verify approval and ad serving in the publisher dashboard -->
       <div class="ad-banner-320">
         <script>
           atOptions = {
