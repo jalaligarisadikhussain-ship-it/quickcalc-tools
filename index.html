@@ -61,11 +61,13 @@
 @media(max-width:420px){.scientific-keys{gap:5px}.scientific-keys button{height:42px;font-size:12px}.number-keys{gap:7px}.number-keys button{height:55px}.calc-brand{font-size:13px}.mode-btn{font-size:11px;padding:7px 8px}.calc-display input.result{font-size:30px}.calc-display{padding:11px}}
 
 </style>
+  <link rel="stylesheet" href="./advanced.css" />
 </head>
 <body>
   <div class="wrap">
     <header><div class="logo">Quick<span>Calc</span></div><nav><a href="#about">About</a><a href="#privacy">Privacy</a></nav></header>
     <h1>Scientific Calculator, Made Simple.</h1><p class="sub">Explore calculations with powerful functions — designed for mobile and desktop.</p>
+    <nav id="qc-mode-nav" class="qc-mode-nav" aria-label="Calculator modes"></nav>
     <main class="main">
       <section class="calculator" aria-label="QuickCalc scientific calculator" id="calculator-panel">
   <div class="calc-topbar">
@@ -165,7 +167,16 @@
         </div>
       </div></aside>
     </main>
-    <section class="description" id="about"><h2>About QuickCalc</h2><p>QuickCalc offers an accessible basic and scientific calculator. You can enter expressions such as sin(30), sqrt(81), 6nCr2, 2^8, log(100), 3! and (2+3)*4. Switch between degrees and radians, recall your last answer, save a value in memory and convert simple decimals into fractions. All computations run locally in your browser; no account is required.</p></section>
+    <section id="advanced-workbench" class="advanced-workbench" aria-label="Advanced calculator tools" hidden>
+      <div class="adv-heading">
+        <div class="adv-eyebrow">QuickCalc · Advanced tools</div>
+        <h2 id="adv-title">Advanced calculator</h2>
+        <p id="adv-subtitle">Choose a mode to start calculating</p>
+      </div>
+      <div id="adv-view"></div>
+      <section id="adv-result" class="adv-result" aria-live="polite" hidden></section>
+    </section>
+    <section class="description" id="about"><h2>About QuickCalc</h2><p>QuickCalc combines a basic and scientific calculator with 12 advanced modes: equations, matrices, vectors, statistics, probability distributions, complex numbers, function tables, numerical calculus, base conversions, unit conversions, number tools and a small spreadsheet. Use the scrollable mode selector to switch between tools. Calculations run locally in your browser; no account is required. Numerical solvers provide approximate results and are not a replacement for specialist engineering software.</p></section>
     <section class="description" id="privacy"><h2>Privacy</h2><p>This calculator does not send your calculations to a server. If advertising is enabled later, the advertising provider may use cookies or similar technology under its own privacy terms. A complete privacy policy and any consent controls required for your audience should be added before going live with ads.</p></section>
     <div class="ad-bottom" aria-label="Advertisement">
       <div class="adtitle">Advertisement</div>
@@ -446,7 +457,7 @@
     else if(ev.key==="Escape"){ev.preventDefault();dispatch("clear");}
   });
   document.addEventListener("keydown",ev=>{
-    if(document.activeElement===input||ev.ctrlKey||ev.altKey||ev.metaKey)return;
+    if(document.querySelector("main.main").hidden || document.activeElement===input||ev.ctrlKey||ev.altKey||ev.metaKey)return;
     if(/^[0-9]$/.test(ev.key)||"+-*/^!%().".includes(ev.key)&&ev.key.length===1)insert(ev.key);
     else if(ev.key==="Enter"||ev.key==="="){ev.preventDefault();doEquals();}
     else if(ev.key==="Backspace")dispatch("backspace");
@@ -456,5 +467,7 @@
   updateTrig();setStatus("");
 })();
 </script>
+  <script src="./advanced-core.js"></script>
+  <script src="./advanced-ui.js"></script>
 </body>
 </html>
