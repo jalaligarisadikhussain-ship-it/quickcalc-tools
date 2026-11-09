@@ -78,7 +78,7 @@
   <div class="calc-display">
     <div class="display-meta"><span id="angle-status">DEG</span><span id="memory-status">M: 0</span></div>
     <div class="expression" id="expression" role="status" aria-live="polite">Type a calculation or tap the keys</div>
-    <input class="result" id="display" type="text" inputmode="decimal" aria-label="Enter mathematical expression" value="0" autocomplete="off" autocapitalize="off" spellcheck="false" />
+    <input class="result" id="display" type="text" inputmode="text" aria-label="Enter mathematical expression" value="0" autocomplete="off" autocapitalize="off" spellcheck="false" />
     <div class="display-foot"><span>Type expressions directly</span><button type="button" class="text-control" data-action="copy" id="copy-button">Copy result</button></div>
   </div>
   <div class="keypads" id="keys">
@@ -251,7 +251,7 @@
       const tail=text.slice(at);
       const numeric=/^(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?/.exec(tail);
       if(numeric){ts.push({type:"num",value:Number(numeric[0])});at+=numeric[0].length;continue;}
-      const word=/^[a-zA-Z][a-zA-Z0-9]*/.exec(tail);
+      const word=/^(?:nCr|nPr|mod)/.exec(tail)||/^[a-zA-Z][a-zA-Z0-9]*/.exec(tail);
       if(word){ts.push({type:"name",value:word[0]});at+=word[0].length;continue;}
       if("+-*/^%!(),".includes(text[at])){ts.push({type:"sym",value:text[at]});at++;continue;}
       throw Error("Unsupported character");
